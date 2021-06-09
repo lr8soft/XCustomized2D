@@ -11,7 +11,8 @@ public:
 
 	static bool LoadLuaFile(lua_State* pState, const std::string& scriptName);
 
-	static bool InvokeLuaFunction(lua_State* pState, const std::string& functionName, size_t returnCount, std::initializer_list<std::any> paraments);
+	static bool InvokeLuaFunction(lua_State* pState, const std::string& functionName, size_t returnCount, std::initializer_list<std::any> paraments,
+		bool isGlobalFunction = true, const std::string& parentModuleName = "");
 
 };
 

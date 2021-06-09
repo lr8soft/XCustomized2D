@@ -45,11 +45,20 @@ bool LuaUtil::LoadLuaFile(lua_State * pState, const std::string & scriptName)
 
 }
 
-bool LuaUtil::InvokeLuaFunction(lua_State * pState, const std::string & functionName, size_t returnCount, std::initializer_list<std::any> paraments)
+bool LuaUtil::InvokeLuaFunction(lua_State * pState, const std::string & functionName, size_t returnCount,
+	std::initializer_list<std::any> paraments, bool isGlobalFunction, const std::string& parentModuleName)
 {
-	lua_getfield(pState, -1, functionName.c_str());	//push function to the top of the stack
+	if (isGlobalFunction)
+	{
+		lua_getglobal(pState, functionName.c_str());
+	}
+	else {
+		lua_getglobal(pState, parentModuleName.c_str());
+		lua_getfield(pState, -1, functionName.c_str());	//push function to the top of the stack
+	}
 
-	for (std::any para : paraments)
+
+	for (std::any para : paraments)	//parse all  parameter
 	{
 		string paraType = para.type().name();
 		if (paraType == "int")
@@ -67,7 +76,23 @@ bool LuaUtil::InvokeLuaFunction(lua_State * pState, const std::string & function
 			double value = any_cast<double>(para);
 			lua_pushnumber(pState, value);
 		}
-
+		else if (paraType == "string")
+		{
+			string value = any_cast<string>(para);
+			lua_pushstring(pState, value.c_str());
+		}
+		else if (paraType == "char")
+		{
+			char realValue[2];
+			realValue[0] = any_cast<char>(para);
+			realValue[0] = '\0';
+			lua_pushstring(pState, realValue);
+		}
+		else if (paraType.find("char const") != paraType.npos)
+		{
+			const char* value = any_cast<char const*>(para);
+			lua_pushstring(pState, value);
+		}
 	}
 
 	int result = lua_pcall(pState, paraments.size(), returnCount, 0);//call the function, 0 parameter 0 return

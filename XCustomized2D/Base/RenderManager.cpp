@@ -1,6 +1,8 @@
 #include "RenderManager.h"
 #include "GameObject.h"
 #include <GL3/gl3w.h>
+RenderManager * RenderManager::pInstance = nullptr;
+
 RenderManager * RenderManager::getInstance()
 {
 	if (pInstance == nullptr)
