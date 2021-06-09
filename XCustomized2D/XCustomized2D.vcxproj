@@ -69,7 +69,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -87,9 +89,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;..\libs\OpenAL32.lib;..\libs\alut.lib;..\libs\jsoncpp.lib;..\libs\lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -120,9 +124,57 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;..\libs\OpenAL32.lib;..\libs\alut.lib;..\libs\jsoncpp_release.lib;..\libs\lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base\Renderer.cpp" />
+    <ClCompile Include="Base\ShaderManager.cpp" />
+    <ClCompile Include="Base\TextureManager.cpp" />
+    <ClCompile Include="EngineFramework.cpp" />
+    <ClCompile Include="FrameInfo.cpp" />
+    <ClCompile Include="ThirdParty\gl3w.c" />
+    <ClCompile Include="Util\AudioHelper.cpp" />
+    <ClCompile Include="Util\ImageLoader.cpp" />
+    <ClCompile Include="Util\JsonLoader.cpp" />
+    <ClCompile Include="Util\LuaUtil.cpp" />
+    <ClCompile Include="Util\ShaderReader.cpp" />
+    <ClCompile Include="Util\Timer.cpp" />
+    <ClCompile Include="XCustomized2D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Base\Image.h" />
+    <ClInclude Include="Base\Renderer.h" />
+    <ClInclude Include="Base\RenderEnum.h" />
+    <ClInclude Include="Base\ShaderManager.h" />
+    <ClInclude Include="Base\TextureManager.h" />
+    <ClInclude Include="EngineFramework.h" />
+    <ClInclude Include="EngineManager.h" />
+    <ClInclude Include="FrameInfo.h" />
+    <ClInclude Include="ThirdParty\json\allocator.h" />
+    <ClInclude Include="ThirdParty\json\assertions.h" />
+    <ClInclude Include="ThirdParty\json\config.h" />
+    <ClInclude Include="ThirdParty\json\forwards.h" />
+    <ClInclude Include="ThirdParty\json\json.h" />
+    <ClInclude Include="ThirdParty\json\json_features.h" />
+    <ClInclude Include="ThirdParty\json\reader.h" />
+    <ClInclude Include="ThirdParty\json\value.h" />
+    <ClInclude Include="ThirdParty\json\version.h" />
+    <ClInclude Include="ThirdParty\json\writer.h" />
+    <ClInclude Include="ThirdParty\lua\lauxlib.h" />
+    <ClInclude Include="ThirdParty\lua\lua.h" />
+    <ClInclude Include="ThirdParty\lua\lua.hpp" />
+    <ClInclude Include="ThirdParty\lua\luaconf.h" />
+    <ClInclude Include="ThirdParty\lua\lualib.h" />
+    <ClInclude Include="Util\AudioHelper.h" />
+    <ClInclude Include="Util\ImageLoader.h" />
+    <ClInclude Include="Util\JsonLoader.h" />
+    <ClInclude Include="Util\LogUtil.hpp" />
+    <ClInclude Include="Util\LuaUtil.h" />
+    <ClInclude Include="Util\MathUtil.h" />
+    <ClInclude Include="Util\ShaderReader.h" />
+    <ClInclude Include="Util\stb_image.h" />
+    <ClInclude Include="Util\Timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

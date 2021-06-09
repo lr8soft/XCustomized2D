@@ -1,17 +1,151 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="资源文件">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{b414cb42-2ff0-476e-a7c4-db4b7608315b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{aae39e6c-2211-4f7e-999c-1d4a3c5fcebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\json">
+      <UniqueIdentifier>{c0547843-de93-4730-8bac-f706e485a484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\lua">
+      <UniqueIdentifier>{5db19fee-98eb-47e2-9b15-66bf76c7f279}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{506685df-9da0-4855-ba48-6cb197c954aa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="XCustomized2D.cpp" />
+    <ClCompile Include="Util\AudioHelper.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\ImageLoader.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\JsonLoader.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\LuaUtil.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\ShaderReader.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\Timer.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFramework.cpp" />
+    <ClCompile Include="FrameInfo.cpp" />
+    <ClCompile Include="ThirdParty\gl3w.c">
+      <Filter>ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Renderer.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\ShaderManager.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\TextureManager.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineFramework.h" />
+    <ClInclude Include="Util\AudioHelper.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\ImageLoader.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\JsonLoader.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\LogUtil.hpp">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\LuaUtil.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\MathUtil.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\ShaderReader.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\stb_image.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Timer.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\json\allocator.h">
+      <Filter>ThirdParty\json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\json\assertions.h">
+      <Filter>ThirdParty\json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\json\config.h">
+      <Filter>ThirdParty\json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\json\forwards.h">
+      <Filter>ThirdParty\json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\json\json.h">
+      <Filter>ThirdParty\json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\json\json_features.h">
+      <Filter>ThirdParty\json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\json\reader.h">
+      <Filter>ThirdParty\json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\json\value.h">
+      <Filter>ThirdParty\json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\json\version.h">
+      <Filter>ThirdParty\json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\json\writer.h">
+      <Filter>ThirdParty\json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\lua\lauxlib.h">
+      <Filter>ThirdParty\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\lua\lua.h">
+      <Filter>ThirdParty\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\lua\lua.hpp">
+      <Filter>ThirdParty\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\lua\luaconf.h">
+      <Filter>ThirdParty\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\lua\lualib.h">
+      <Filter>ThirdParty\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameInfo.h" />
+    <ClInclude Include="EngineManager.h" />
+    <ClInclude Include="Base\RenderEnum.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Renderer.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ShaderManager.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\TextureManager.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Image.h">
+      <Filter>Base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
