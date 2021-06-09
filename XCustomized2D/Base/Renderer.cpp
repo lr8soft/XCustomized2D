@@ -7,6 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "ShaderManager.h"
+#include "TextureManager.h"
 
 using namespace std;
 
@@ -47,22 +48,24 @@ GLuint Renderer::CreateRenderBatch(BufferUsage bufferUsage,  size_t indicesSize,
 }
 
 void Renderer::RenderBatch(GLuint batchHandle, const std::string& shaderFolder, const std::string & shaderName,
-	std::map<std::string, std::shared_ptr<Image>>& textureGroup, std::map<std::string, std::any>& uniformInfoGroup, 
-	size_t indicesSize, size_t updateSize, void * updateData)
+	std::map<std::string, std::string>& textureGroup, std::map<std::string, std::any>& uniformInfoGroup, 
+	size_t indicesSize, size_t updateOffset, size_t updateSize, void * updateData)
 {
 	GLuint shaderHandle = ShaderManager::getInstance()->bindProgram(shaderFolder, shaderName);
 
 
 	size_t index = 0;
 	//bind all texture
+
+	TextureManager* texManager = TextureManager::getInstance();
 	for (auto texIter = textureGroup.begin(), texIterEnd = textureGroup.end(); texIter != texIterEnd; texIter++, index++)
 	{
-		glActiveTexture(GL_TEXTURE0 + index);
-
-
 		auto loc = glGetUniformLocation(shaderHandle, texIter->first.c_str());	//find texture entrance
+		GLuint texHandle = texManager->GetTexture(texIter->second)->tbo;	//find texture handle
+
+		glActiveTexture(GL_TEXTURE0 + index);
 		glUniform1i(loc, index);
-		glBindTexture(GL_TEXTURE_2D, texIter->second->tbo);
+		glBindTexture(GL_TEXTURE_2D, texHandle);
 	}
 
 	//send all uniform data to shader
@@ -105,7 +108,7 @@ void Renderer::RenderBatch(GLuint batchHandle, const std::string& shaderFolder, 
 
 	if (updateSize > 0)	//update array buffer data
 	{
-		glBufferSubData(GL_ARRAY_BUFFER, 0, updateSize, updateData);
+		glBufferSubData(GL_ARRAY_BUFFER, updateOffset, updateSize, updateData);
 	}
 
 	glBindVertexArray(batchHandle);

@@ -6,13 +6,7 @@
 #include "Util/LogUtil.hpp"
 #include "EngineFramework.h"
 
-#include "Base/Renderer.h"
-#include "Base/TextureManager.h"
-
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "Util/LuaUtil.h"
 
 EngineFramework* EngineFramework::pInstance = nullptr;
 
@@ -70,6 +64,10 @@ void EngineFramework::FrameInit()
 	gl3wInit();
 
 
+
+	lua_State* L =  LuaUtil::CreateNewEvon();
+	LuaUtil::LoadLuaFile(L, "test.lua");
+	LuaUtil::InvokeLuaFunction(L, "testFunc", 1, {"a", 1, "bbb", 1.0f});
 }
 
 void EngineFramework::FrameLoop()
@@ -81,46 +79,8 @@ void EngineFramework::FrameLoop()
 
 	//instance->applyRenderSettings();
 
-	///////test data////////////////
-
-	GLfloat vertices[] = {
-	 1.0f, 1.0f,
-	 1.0f,-1.0f,
-	-1.0f,-1.0f,
-	-1.0f, 1.0f
-	};
-
-	GLshort indices[6] = { 0, 1, 2, 2, 3, 0 };
-
-	void* vertexFormat[] = { (void*)0};
-
-	size_t elementLength[] = { 2 };
-
-	size_t elementSize[] = { 0 };
-
-
-	Renderer* renderer = Renderer::getInstance();
-	auto handle  = renderer->CreateRenderBatch(STATIC_DRAW, sizeof(indices), indices, sizeof(vertices), vertices, 1,
-		vertexFormat, elementLength, elementSize, FLOAT_DATA, false);
-
-
-	auto image = TextureManager::getInstance()->GetTexture("Assets/Texture/test.png");
-
-	std::map<std::string, std::shared_ptr<Image>> imageList;
-	imageList["tex"] = image;
-
-	glm::mat4 mvp_mat;
-    mvp_mat = glm::translate(mvp_mat, glm::vec3(0));
-	//mvp_mat = glm::scale(mvp_mat, glm::vec3(1));
-
-	std::map<std::string, std::any> uniformInfo;
-	uniformInfo["mvp_mat"] = mvp_mat;
-
-
-	///////test data////////////////
 	while (!glfwWindowShouldClose(pScreen)) {
-		//instance->onRenderWork();
-		renderer->RenderBatch(handle, "Test", "default", imageList, uniformInfo, sizeof(indices) / sizeof(GLushort));
+		
 
 		glfwSwapBuffers(pScreen);
 		glfwPollEvents();

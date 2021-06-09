@@ -1,15 +1,20 @@
 #include "LuaUtil.h"
 #include "LogUtil.hpp"
+#include "../EngineDefine.h"
+#include <string>
 
-//#include "../Core/GameObjectBinder.h"
-lua_State* LuaUtil::getNewGameObjectEvon()
+using namespace std;
+
+lua_State* LuaUtil::CreateNewEvon()
 {
 	lua_State* luaState = luaL_newstate();
 	static const luaL_Reg lualibs[] = {
 		{ "base", luaopen_base },
 		{ "math", luaopen_math },
 		{ "io", luaopen_io },
-		//{ "NewHorizon", GameObjectBinder::luaOpenGameObject},
+		{ "os", luaopen_os },
+	    { "string", luaopen_string },
+		{ "package", luaopen_package },
 		{ NULL, NULL}
 	};
 
@@ -22,9 +27,55 @@ lua_State* LuaUtil::getNewGameObjectEvon()
 	return luaState;
 }
 
-void LuaUtil::luaEnvironmentRelease(lua_State* pState)
+void LuaUtil::ReleaseEvon(lua_State* pState)
 {
 	lua_close(pState);
+}
+
+bool LuaUtil::LoadLuaFile(lua_State * pState, const std::string & scriptName)
+{
+	int status = luaL_loadfile(pState, (DEFAULT_SCRIPT_FOLDEER + scriptName).c_str());
+	if (status == LUA_OK)
+	{
+		lua_pcall(pState, 0, LUA_MULTRET, 0);//call default lua function
+
+		return true;
+	}
+	return false;
+
+}
+
+bool LuaUtil::InvokeLuaFunction(lua_State * pState, const std::string & functionName, size_t returnCount, std::initializer_list<std::any> paraments)
+{
+	lua_getfield(pState, -1, functionName.c_str());	//push function to the top of the stack
+
+	for (std::any para : paraments)
+	{
+		string paraType = para.type().name();
+		if (paraType == "int")
+		{
+			int value = any_cast<int>(para);
+			lua_pushnumber(pState, value);
+		}
+		else if (paraType == "float")
+		{
+			float value = any_cast<float>(para);
+			lua_pushnumber(pState, value);
+		}
+		else if (paraType == "double")
+		{
+			double value = any_cast<double>(para);
+			lua_pushnumber(pState, value);
+		}
+
+	}
+
+	int result = lua_pcall(pState, paraments.size(), returnCount, 0);//call the function, 0 parameter 0 return
+	if (result)
+	{
+		return false;
+	}
+	return true;
 }
 
 

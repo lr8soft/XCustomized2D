@@ -128,7 +128,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base\GameObject.cpp" />
     <ClCompile Include="Base\Renderer.cpp" />
+    <ClCompile Include="Base\RenderManager.cpp" />
     <ClCompile Include="Base\ShaderManager.cpp" />
     <ClCompile Include="Base\TextureManager.cpp" />
     <ClCompile Include="EngineFramework.cpp" />
@@ -143,11 +145,14 @@
     <ClCompile Include="XCustomized2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base\GameObject.h" />
     <ClInclude Include="Base\Image.h" />
     <ClInclude Include="Base\Renderer.h" />
     <ClInclude Include="Base\RenderEnum.h" />
+    <ClInclude Include="Base\RenderManager.h" />
     <ClInclude Include="Base\ShaderManager.h" />
     <ClInclude Include="Base\TextureManager.h" />
+    <ClInclude Include="EngineDefine.h" />
     <ClInclude Include="EngineFramework.h" />
     <ClInclude Include="EngineManager.h" />
     <ClInclude Include="FrameInfo.h" />
@@ -175,6 +180,7 @@
     <ClInclude Include="Util\ShaderReader.h" />
     <ClInclude Include="Util\stb_image.h" />
     <ClInclude Include="Util\Timer.h" />
+    <ClInclude Include="Util\UuidUtill.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
