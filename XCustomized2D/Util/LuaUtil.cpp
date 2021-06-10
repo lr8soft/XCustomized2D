@@ -1,6 +1,8 @@
 #include "LuaUtil.h"
 #include "LogUtil.hpp"
 #include "../EngineDefine.h"
+#include "../Mapper/MathMapper.h"
+
 #include <string>
 
 using namespace std;
@@ -15,6 +17,7 @@ lua_State* LuaUtil::CreateNewEvon()
 		{ "os", luaopen_os },
 	    { "string", luaopen_string },
 		{ "package", luaopen_package },
+		{ "GLM", MathMapper::InitMathFuncLibs},
 		{ NULL, NULL}
 	};
 

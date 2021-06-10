@@ -1,32 +1,13 @@
+function testFunc()
+    print("fuck")
 
-GameObject = {
+    local matrix = GLM.CreateMatrix()
 
-}
+    matrix:Show()
+    --matrix:Scale({0.5, 0.5, 0.5})
 
-
-function GameObject.OnRenderInit()
-
-
-end
-
-function GameObject.OnRender()
-
-end
-
-function GameObject.OnLogicInit()
+    matrix:Show()
 
 
-end
 
-
-function GameObject.OnLoginWork()
-
-
-end
-
-
-function testFunc(a, b)
-    print(a + b)
-
-    return a + b
 end

@@ -135,6 +135,7 @@
     <ClCompile Include="Base\TextureManager.cpp" />
     <ClCompile Include="EngineFramework.cpp" />
     <ClCompile Include="FrameInfo.cpp" />
+    <ClCompile Include="Mapper\MathMapper.cpp" />
     <ClCompile Include="Mapper\RenderMapper.cpp" />
     <ClCompile Include="ThirdParty\gl3w.c" />
     <ClCompile Include="Util\AudioHelper.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="EngineFramework.h" />
     <ClInclude Include="EngineManager.h" />
     <ClInclude Include="FrameInfo.h" />
+    <ClInclude Include="Mapper\MathMapper.h" />
     <ClInclude Include="Mapper\RenderMapper.h" />
     <ClInclude Include="ThirdParty\json\allocator.h" />
     <ClInclude Include="ThirdParty\json\assertions.h" />

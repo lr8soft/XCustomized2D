@@ -4,6 +4,8 @@
 #include <string>
 #include <map>
 
+#include "Renderer.h"
+
 class GameObject;
 class RenderManager {
 private:
@@ -16,7 +18,7 @@ public:
 
 
 	void ApplyRenderSettings();
-	
+
 	void StartRender();
 	void OnRender(GameObject*);
 	void FinishRender();

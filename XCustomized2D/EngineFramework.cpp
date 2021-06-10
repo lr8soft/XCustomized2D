@@ -67,7 +67,7 @@ void EngineFramework::FrameInit()
 
 	lua_State* L =  LuaUtil::CreateNewEvon();
 	LuaUtil::LoadLuaFile(L, "test.lua");
-	LuaUtil::InvokeLuaFunction(L, "testFunc", 1, {1,2});
+	LuaUtil::InvokeLuaFunction(L, "testFunc", 0, {});
 }
 
 void EngineFramework::FrameLoop()

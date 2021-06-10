@@ -59,14 +59,28 @@ int RenderMapper::LuaCreateRenderBatch(lua_State * luaState)
 
 	}
 
-
-	//luaL_checktype(luaState, -3, LUA_T);
-
 	GLuint handle = Renderer::getInstance()->CreateRenderBatch(bufferUsage, realIndices.size(), &realIndices[0], vertices.size(), &vertices[0],
 		formats.size(), &realFormat[0], &elementLength[0], &elementSize[0], realDataFormat, needNormalized);
+
+	lua_settop(luaState, 0);
+	lua_pushinteger(luaState, handle);
 	
 
 	return 1;
+}
+
+int RenderMapper::LuaRenderBatch(lua_State * luaState)
+{
+	int stackIndex = -1;
+	std::vector<float> updateVertices = LuaUtil::ParseLuaFloatTable(luaState, stackIndex--);
+
+	luaL_checktype(luaState, stackIndex, LUA_TNUMBER);
+	int updateOffset = lua_tointeger(luaState, stackIndex--);
+
+	luaL_checktype(luaState, stackIndex, LUA_TNUMBER);
+	int indexSize = lua_tointeger(luaState, stackIndex--);
+
+	return 0;
 }
 
 int RenderMapper::InitRenderFuncLibs(lua_State * luaState)
@@ -100,6 +114,7 @@ int RenderMapper::InitRenderFuncLibs(lua_State * luaState)
 	static const struct luaL_Reg objectlib_f[] = {
 	//{"getObject", luaGetInstance},
 	//{"newInstance", luaAddNewInstance},
+	{"CreateRenderBatch", LuaCreateRenderBatch},
 	{NULL, NULL}
 	};
 
