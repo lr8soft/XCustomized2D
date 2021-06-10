@@ -1,12 +1,16 @@
 #pragma once
 #ifndef _RENDER_MANAGER_H_
 #define _RENDER_MANAGER_H_
+#include <string>
+#include <map>
 
 class GameObject;
 class RenderManager {
 private:
 	static RenderManager* pInstance;
 	
+	std::map<std::string, unsigned int> renderHandleGroup;
+
 public:
 	static RenderManager* getInstance();
 

@@ -103,6 +103,49 @@ bool LuaUtil::InvokeLuaFunction(lua_State * pState, const std::string & function
 	return true;
 }
 
+std::vector<int> LuaUtil::ParseLuaIntegerTable(lua_State * pState, int index)
+{
+	luaL_checktype(pState, index, LUA_TTABLE);
+
+	std::vector<int> value;
+
+	size_t elementSizeLength = luaL_len(pState, index);
+
+
+	for (int i = 1; i <= elementSizeLength; ++i) {
+		lua_rawgeti(pState, index, i);	//set the element to top
+
+		int v = lua_tointeger(pState, -1);	//read the top of stack
+		value.push_back(v);
+
+		lua_pop(pState, 1);	//pop the top of the stack
+	}
+
+
+	return value;
+}
+
+std::vector<float> LuaUtil::ParseLuaFloatTable(lua_State * pState, int index)
+{
+	luaL_checktype(pState, index, LUA_TTABLE);
+
+	std::vector<float> value;
+
+	size_t elementSizeLength = luaL_len(pState, index);
+
+	for (int i = 1; i <= elementSizeLength; ++i) {
+		lua_rawgeti(pState, index, i);
+
+		float v = lua_tonumber(pState, -1);
+		value.push_back(v);
+
+		lua_pop(pState, 1);	
+	}
+
+
+	return value;
+}
+
 
 
 /*

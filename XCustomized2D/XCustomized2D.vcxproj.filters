@@ -20,6 +20,9 @@
     <Filter Include="Base">
       <UniqueIdentifier>{506685df-9da0-4855-ba48-6cb197c954aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mapper">
+      <UniqueIdentifier>{a74d7c1e-8ca3-4736-b4b6-2b333554ae8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XCustomized2D.cpp" />
@@ -60,6 +63,9 @@
     </ClCompile>
     <ClCompile Include="Base\GameObject.cpp">
       <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Mapper\RenderMapper.cpp">
+      <Filter>Mapper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,5 +169,8 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="EngineDefine.h" />
+    <ClInclude Include="Mapper\RenderMapper.h">
+      <Filter>Mapper</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -21,9 +21,10 @@ Renderer * Renderer::getInstance()
 	return pInstance;
 }
 
-GLuint Renderer::CreateRenderBatch(BufferUsage bufferUsage,  size_t indicesSize, GLshort* indices, size_t verticesSize, void* vertices,
-	size_t formatLength, void** formats, size_t* elementLength, size_t* elementSize, DataFormat dataFormat, bool needNormalize)
+GLuint Renderer::CreateRenderBatch(BufferUsage bufferUsage, int indicesSize, GLshort* indices, int verticesSize, void* vertices,
+	int formatLength, void** formats, int* elementLength, int* elementSize, DataFormat dataFormat, bool needNormalize)
 {
+
 	GLuint VAO, VBO, EBO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);

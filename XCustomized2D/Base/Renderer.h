@@ -18,10 +18,10 @@ public:
 	static Renderer* getInstance();
 
 	GLuint CreateRenderBatch(BufferUsage bufferUsage,
-		size_t indicesSize, GLshort* indices,
-		size_t verticesSize, void* vertices,
-		size_t formatLength, void** formats, 
-		size_t* elementLength, size_t* elementSize, DataFormat dataFormat, bool needNormalize );
+		int indicesSize, GLshort* indices,
+		int verticesSize, void* vertices,
+		int formatLength, void** formats,
+		int* elementLength, int* elementSize, DataFormat dataFormat, bool needNormalize );
 
 	void RenderBatch(
 		GLuint batchHandle, const std::string& shaderFolder, const std::string& shaderName, 
