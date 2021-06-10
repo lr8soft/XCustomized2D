@@ -17,7 +17,8 @@ lua_State* LuaUtil::CreateNewEvon()
 		{ "os", luaopen_os },
 	    { "string", luaopen_string },
 		{ "package", luaopen_package },
-		{ "GLM", MathMapper::InitMathFuncLibs},
+
+		{ "XCustomizedMath", MathMapper::InitMathFuncLibs},
 		{ NULL, NULL}
 	};
 
@@ -25,7 +26,7 @@ lua_State* LuaUtil::CreateNewEvon()
 	for (; lib->func != nullptr; lib++)
 	{
 		luaL_requiref(luaState, lib->name, lib->func, 1);
-		lua_pop(luaState, 1);
+		//lua_pop(luaState, 1);
 	}
 	return luaState;
 }
