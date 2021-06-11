@@ -93,6 +93,15 @@ int MathMapper::LuaDeleteMatrix(lua_State * luaState)
 	return 0;
 }
 
+glm::mat4 * MathMapper::ConvertToMatrix(lua_State * luaState, int index)
+{
+	//luaL_checktype(luaState, index, LUA_TUSERDATA);
+	//return (glm::mat4 *)lua_touserdata(luaState, index);
+	glm::mat4 **object = (glm::mat4**)luaL_checkudata(luaState, index, MATH_HELPER_NAMESPACE);
+	luaL_argcheck(luaState, object != NULL, 1, "invalid Matrix data");
+	return *object;
+}
+
 int MathMapper::InitMathFuncLibs(lua_State * luaState)
 {
 	luaL_newmetatable(luaState, MATH_HELPER_NAMESPACE);

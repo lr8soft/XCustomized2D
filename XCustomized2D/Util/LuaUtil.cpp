@@ -2,6 +2,7 @@
 #include "LogUtil.hpp"
 #include "../EngineDefine.h"
 #include "../Mapper/MathMapper.h"
+#include "../Mapper/RenderMapper.h"
 
 #include <string>
 
@@ -19,6 +20,7 @@ lua_State* LuaUtil::CreateNewEvon()
 		{ "package", luaopen_package },
 
 		{ "XCustomizedMath", MathMapper::InitMathFuncLibs},
+		{ "XCustomizedRenderer", RenderMapper::InitRenderFuncLibs},
 		{ NULL, NULL}
 	};
 

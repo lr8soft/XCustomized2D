@@ -22,10 +22,7 @@ private:
 	static int LuaCreateMatrix(lua_State* luaState);
 	static int LuaDeleteMatrix(lua_State* luaState);
 public:
-
-
-
-
+	static glm::mat4* ConvertToMatrix(lua_State* luaState, int index);
 
 	static int InitMathFuncLibs(lua_State * luaState);
 	

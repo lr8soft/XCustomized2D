@@ -29,8 +29,7 @@ public:
 		{
 			return std::move(std::string(""));
 		}
-
-		sprintf(buf,
+		sprintf_s(buf, 64,
 			"%08X-%04X-%04x-%02X%02X-%02X%02X%02X%02X%02X%02X",
 			guid.Data1, guid.Data2, guid.Data3,
 			guid.Data4[0], guid.Data4[1], guid.Data4[2],

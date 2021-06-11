@@ -1,20 +1,26 @@
 #include "RenderMapper.h"
 #include "../Util/LuaUtil.h"
-#include "../Base/Renderer.h"
+
+#include "../Base/RenderEnum.h"
+#include "../Base/RenderManager.h"
+
+#include "MathMapper.h"
 #include <string>
 
 using namespace std;
+
+std::map<std::string, std::any> RenderMapper::ParseUniformData(lua_State * luaState, int index)
+{
+	return std::map<std::string, std::any>();
+}
 
 int RenderMapper::LuaCreateRenderBatch(lua_State * luaState)
 {
 	int stackIndex = -1;
 
 	luaL_checktype(luaState, stackIndex, LUA_TBOOLEAN);
-	bool needNormalized = lua_tostring(luaState, stackIndex--);
+	bool needNormalized = lua_toboolean(luaState, stackIndex--);
 
-
-	luaL_checktype(luaState, stackIndex, LUA_TSTRING);
-	string dataFormat = lua_tostring(luaState, stackIndex--);
 
 	std::vector<int> elementSize = LuaUtil::ParseLuaIntegerTable(luaState, stackIndex--);
 	std::vector<int> elementLength = LuaUtil::ParseLuaIntegerTable(luaState, stackIndex--);
@@ -49,21 +55,10 @@ int RenderMapper::LuaCreateRenderBatch(lua_State * luaState)
 		bufferUsage = STATIC_DRAW;
 	}
 
-	DataFormat realDataFormat;
-	if (dataFormat == "FLOAT")
-	{
-		realDataFormat = FLOAT_DATA;
-	}
-	else {
-		realDataFormat = INTEGER_DATA;
-
-	}
-
-	GLuint handle = Renderer::getInstance()->CreateRenderBatch(bufferUsage, realIndices.size(), &realIndices[0], vertices.size(), &vertices[0],
-		formats.size(), &realFormat[0], &elementLength[0], &elementSize[0], realDataFormat, needNormalized);
+	std::string uuid = RenderManager::getInstance()->CreateBatch(bufferUsage, realIndices, vertices, realFormat, elementLength, elementSize, needNormalized);
 
 	lua_settop(luaState, 0);
-	lua_pushinteger(luaState, handle);
+	lua_pushstring(luaState, uuid.c_str());
 	
 
 	return 1;
@@ -79,6 +74,9 @@ int RenderMapper::LuaRenderBatch(lua_State * luaState)
 
 	luaL_checktype(luaState, stackIndex, LUA_TNUMBER);
 	int indexSize = lua_tointeger(luaState, stackIndex--);
+
+	//glm::mat4* matrix = MathMapper::ConvertToMatrix(luaState, stackIndex--);
+	auto uniformData = ParseUniformData(luaState, stackIndex--);
 
 	return 0;
 }
@@ -121,5 +119,5 @@ int RenderMapper::InitRenderFuncLibs(lua_State * luaState)
 	luaL_setfuncs(luaState, objectlib_m, 0);
 	luaL_newlib(luaState, objectlib_f);
 
-	return 0;
+	return 1;
 }

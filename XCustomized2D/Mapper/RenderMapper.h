@@ -5,9 +5,12 @@
 #define RENDER_HELPER_NAMESPACE "XCustomized2D.RenderHelper"
 #include "../Util/LuaUtil.h"
 
+#include <map>
+#include <string>
+#include <any>
 class RenderMapper {
 private:
-
+	static	std::map<std::string, std::any> ParseUniformData(lua_State* luaState, int index);
 public:
 
 	static int LuaCreateRenderBatch(lua_State * luaState);
