@@ -188,7 +188,6 @@ std::map<std::string, std::any> LuaUtil::ParseMapLikeTable(lua_State * pState, i
 	for (int i = 1; i <= elementSizeLength; ++i) {
 		lua_rawgeti(pState, index, i);
 
-		//string v = lua_tostring(pState, -1);
 		if (isKey)
 		{
 			key = lua_tostring(pState, -1);
@@ -206,7 +205,6 @@ std::map<std::string, std::any> LuaUtil::ParseMapLikeTable(lua_State * pState, i
 
 std::any LuaUtil::ParseValue(lua_State * pState, int index)
 {
-	LogUtil::printError(std::to_string(lua_type(pState, index)));
 	switch (lua_type(pState, index))
 	{
 	case LUA_TNUMBER:

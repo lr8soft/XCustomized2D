@@ -36,7 +36,7 @@ std::string RenderManager::CreateBatch(BufferUsage bufferUsage, std::vector<GLsh
 {
 	Renderer* renderer = Renderer::getInstance();
 
-	GLuint renderHandle = renderer->CreateRenderBatch(bufferUsage, indices.size(), &indices[0], vertices.size(), &vertices[0], formats.size(), &formats[0],
+	GLuint renderHandle = renderer->CreateRenderBatch(bufferUsage, sizeof(indices), &indices[0], sizeof(vertices), &vertices[0], formats.size(), &formats[0],
 		&elementLength[0], &elementSize[0], FLOAT_DATA, needNormalize);
 
 	std::string uuid = UuidUtil::GenerateUuid();

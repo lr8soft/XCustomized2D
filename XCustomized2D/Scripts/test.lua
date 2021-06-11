@@ -17,11 +17,12 @@ function GameObject.TestFunc()
     print("Init Matrix")
     matrix:Show()
 
+
+
+    --[[
     print("Scale 0.5 0.5 0.5")
     matrix:Scale({0.5, 0.5, 0.5})
     matrix:Show()
-
-    --[[
     print("Rotate 90 degrees, X Axis")
     matrix:Rotate(90, {1, 0, 0})
     matrix:Show()
@@ -29,7 +30,7 @@ function GameObject.TestFunc()
 
 
     print("Translate to 1.0 1.0 1.0")
-    matrix:Translate({1.0, 1.0, 1.0})
+    matrix:Translate({0.0, 0.0, 0.0})
     matrix:Show()
 
     table.insert(GameObject.shaderUniformData, "mvp_mat")
@@ -56,8 +57,6 @@ function GameObject.TestFunc()
 end
 
 function GameObject.OnRender()
-    print("render", GameObject.shaderUniformData[2])
     XCustomizedRenderer.RenderBatch(GameObject.renderHandle, "Test", "Default", GameObject.textureData, GameObject.shaderUniformData, 6, 0, {})
-    print("finish")
 end
 

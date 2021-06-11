@@ -97,15 +97,25 @@ int RenderMapper::LuaRenderBatch(lua_State * luaState)
 	/***********get texture map*********/
 
 	luaL_checktype(luaState, stackIndex, LUA_TSTRING);
-	string shaderFolderName = lua_tostring(luaState, stackIndex--);
+	string shaderName = lua_tostring(luaState, stackIndex--);
 
 	luaL_checktype(luaState, stackIndex, LUA_TSTRING);
-	string shaderName = lua_tostring(luaState, stackIndex--);
+	string shaderFolderName = lua_tostring(luaState, stackIndex--);
+
 
 	luaL_checktype(luaState, stackIndex, LUA_TSTRING);
 	string uuid = lua_tostring(luaState, stackIndex--);
 
-	RenderManager::getInstance()->RenderBatch(uuid, shaderFolderName, shaderName, imageGroup, uniformData, indexSize, updateOffset, updateOffset, &updateVertices[0]);
+	size_t updateVerticesSize = updateVertices.size();
+	if (updateVerticesSize > 0)
+	{
+		RenderManager::getInstance()->RenderBatch(uuid, shaderFolderName, shaderName, imageGroup, uniformData, indexSize, updateOffset, updateVerticesSize * sizeof(float), &updateVertices[0]);
+	}
+	else {
+		RenderManager::getInstance()->RenderBatch(uuid, shaderFolderName, shaderName, imageGroup, uniformData, indexSize);
+	}
+
+	
 
 	return 0;
 }
