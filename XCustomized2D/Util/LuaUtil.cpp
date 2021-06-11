@@ -4,6 +4,7 @@
 #include "../Mapper/MathMapper.h"
 #include "../Mapper/RenderMapper.h"
 
+
 #include <string>
 
 using namespace std;
@@ -18,6 +19,7 @@ lua_State* LuaUtil::CreateNewEvon()
 		{ "os", luaopen_os },
 	    { "string", luaopen_string },
 		{ "package", luaopen_package },
+		{ "table", luaopen_table},
 
 		{ "XCustomizedMath", MathMapper::InitMathFuncLibs},
 		{ "XCustomizedRenderer", RenderMapper::InitRenderFuncLibs},
@@ -150,6 +152,80 @@ std::vector<float> LuaUtil::ParseLuaFloatTable(lua_State * pState, int index)
 
 
 	return value;
+}
+
+std::vector<std::string> LuaUtil::ParseLuaStringTable(lua_State * pState, int index)
+{
+	luaL_checktype(pState, index, LUA_TTABLE);
+
+	std::vector<string> value;
+
+	size_t elementSizeLength = luaL_len(pState, index);
+
+	for (int i = 1; i <= elementSizeLength; ++i) {
+		lua_rawgeti(pState, index, i);
+
+		string v = lua_tostring(pState, -1);
+		value.push_back(v);
+
+		lua_pop(pState, 1);
+	}
+
+
+	return value;
+}
+
+std::map<std::string, std::any> LuaUtil::ParseMapLikeTable(lua_State * pState, int index)
+{
+	luaL_checktype(pState, index, LUA_TTABLE);
+
+	std::map<string, any> value;
+
+	size_t elementSizeLength = luaL_len(pState, index);
+
+	bool isKey = true;
+	string key;
+	for (int i = 1; i <= elementSizeLength; ++i) {
+		lua_rawgeti(pState, index, i);
+
+		//string v = lua_tostring(pState, -1);
+		if (isKey)
+		{
+			key = lua_tostring(pState, -1);
+		}
+		else {
+			value[key] = ParseValue(pState, -1);
+		}
+
+		isKey = !isKey;
+		lua_pop(pState, 1);
+	}
+
+	return value;
+}
+
+std::any LuaUtil::ParseValue(lua_State * pState, int index)
+{
+	LogUtil::printError(std::to_string(lua_type(pState, index)));
+	switch (lua_type(pState, index))
+	{
+	case LUA_TNUMBER:
+		return lua_tonumber(pState, index);
+	case LUA_TSTRING:
+		return lua_tostring(pState, index);
+	case LUA_TBOOLEAN:
+		return lua_toboolean(pState, index);
+
+	case LUA_TUSERDATA:
+		void* userData = lua_touserdata(pState, index);
+		if (glm::mat4 **object = (glm::mat4**)luaL_checkudata(pState, index, MATH_HELPER_NAMESPACE))	//translate to mat4
+		{
+			return **object;
+		}
+	}
+
+
+	return 0;
 }
 
 

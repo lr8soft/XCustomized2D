@@ -5,6 +5,7 @@
 #include <string>
 #include <any>
 #include <vector>
+#include <map>
 class LuaUtil {
 public:
 	static lua_State* CreateNewEvon();
@@ -18,6 +19,11 @@ public:
 
 	static std::vector<int> ParseLuaIntegerTable(lua_State* pState, int index);
 	static std::vector<float> ParseLuaFloatTable(lua_State* pState, int index);
+	static std::vector<std::string> ParseLuaStringTable(lua_State* pState, int index);
+
+	static std::map<std::string, std::any> ParseMapLikeTable(lua_State* pState, int index);
+
+	static std::any ParseValue(lua_State* pState, int index);
 
 };
 

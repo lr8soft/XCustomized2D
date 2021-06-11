@@ -1,5 +1,6 @@
 #include <thread>
 #include <GL3/gl3w.h>
+#include <string>
 #include "EngineFramework.h"
 #include "FrameInfo.h"
 
@@ -7,6 +8,7 @@
 #include "EngineFramework.h"
 
 #include "Util/LuaUtil.h"
+#include "ThirdParty/lua/lua.h"
 
 EngineFramework* EngineFramework::pInstance = nullptr;
 
@@ -68,6 +70,24 @@ void EngineFramework::FrameInit()
 	lua_State* L =  LuaUtil::CreateNewEvon();
 	LuaUtil::LoadLuaFile(L, "test.lua");
 	LuaUtil::InvokeLuaFunction(L, "TestFunc", 0, {}, false, "GameObject");
+
+	LuaUtil::InvokeLuaFunction(L, "OnRender", 0, {}, false, "GameObject");
+	//lua_rawgeti(L, -1, 1);
+
+
+	//lua_pushstring(L, "tex");
+	//lua_gettable(L, -2);
+
+	
+
+	
+	//std::string info = lua_tostring(L, -1);
+	//lua_tostring(L, -2);
+
+	//LogUtil::printError();
+	//auto strList = LuaUtil::ParseLuaStringTable(L, -1);
+	//LogUtil::printError(info);
+	//LogUtil::printError(strList[1]);
 }
 
 void EngineFramework::FrameLoop()

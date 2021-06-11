@@ -1,11 +1,14 @@
 require("XCustomizedMath")
 require("XCustomizedRenderer")
+
+
 GameObject = {
     renderHandle = "",
-    shaderData = {
-        tex = "Assets/Texture/test.png",
-        mvp_mat = nil
-    }
+    textureData = {
+        "tex", "Assets/Texture/test.png"
+    },
+
+    shaderUniformData = {}
 }
 
 function GameObject.TestFunc()
@@ -29,7 +32,9 @@ function GameObject.TestFunc()
     matrix:Translate({1.0, 1.0, 1.0})
     matrix:Show()
 
-    GameObject.shaderData.mvp_mat = matrix  
+    table.insert(GameObject.shaderUniformData, "mvp_mat")
+    table.insert(GameObject.shaderUniformData, matrix)  -- mvp_mat--->matrix
+  
     --get mvp matrix
 
 
@@ -51,5 +56,8 @@ function GameObject.TestFunc()
 end
 
 function GameObject.OnRender()
-
+    print("render", GameObject.shaderUniformData[2])
+    XCustomizedRenderer.RenderBatch(GameObject.renderHandle, "Test", "Default", GameObject.textureData, GameObject.shaderUniformData, 6, 0, {})
+    print("finish")
 end
+

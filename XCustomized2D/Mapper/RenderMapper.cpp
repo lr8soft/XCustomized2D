@@ -76,7 +76,36 @@ int RenderMapper::LuaRenderBatch(lua_State * luaState)
 	int indexSize = lua_tointeger(luaState, stackIndex--);
 
 	//glm::mat4* matrix = MathMapper::ConvertToMatrix(luaState, stackIndex--);
-	auto uniformData = ParseUniformData(luaState, stackIndex--);
+	auto uniformData = LuaUtil::ParseMapLikeTable(luaState, stackIndex--);
+
+	/***********get texture map*********/
+	std::vector<std::string> imageInfo = LuaUtil::ParseLuaStringTable(luaState, stackIndex--);
+	std::map<std::string, std::string> imageGroup;
+	string textureMapperName;
+	bool isImagePath = false;
+	for (string info : imageInfo)
+	{
+		if (!isImagePath)
+		{
+			textureMapperName = info;
+		}
+		else {
+			imageGroup[textureMapperName] = info;
+		}
+		isImagePath = !isImagePath;
+	}
+	/***********get texture map*********/
+
+	luaL_checktype(luaState, stackIndex, LUA_TSTRING);
+	string shaderFolderName = lua_tostring(luaState, stackIndex--);
+
+	luaL_checktype(luaState, stackIndex, LUA_TSTRING);
+	string shaderName = lua_tostring(luaState, stackIndex--);
+
+	luaL_checktype(luaState, stackIndex, LUA_TSTRING);
+	string uuid = lua_tostring(luaState, stackIndex--);
+
+	RenderManager::getInstance()->RenderBatch(uuid, shaderFolderName, shaderName, imageGroup, uniformData, indexSize, updateOffset, updateOffset, &updateVertices[0]);
 
 	return 0;
 }
@@ -113,6 +142,7 @@ int RenderMapper::InitRenderFuncLibs(lua_State * luaState)
 	//{"getObject", luaGetInstance},
 	//{"newInstance", luaAddNewInstance},
 	{"CreateRenderBatch", LuaCreateRenderBatch},
+	{"RenderBatch", LuaRenderBatch},
 	{NULL, NULL}
 	};
 
