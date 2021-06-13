@@ -227,8 +227,6 @@ std::any LuaUtil::ParseValue(lua_State * pState, int index)
 	return 0;
 }
 
-
-
 /*
 	lua_State* luaState = LuaUtil::getNewGameObjectEvon();
 

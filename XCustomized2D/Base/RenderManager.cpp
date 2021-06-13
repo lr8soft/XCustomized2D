@@ -40,8 +40,6 @@ std::string RenderManager::CreateBatch(BufferUsage bufferUsage, std::vector<int>
 	GLuint renderHandle = renderer->CreateRenderBatch(bufferUsage, indices.size() * sizeof(int), &indices[0], vertices.size() * sizeof(float), &vertices[0], formats.size(), &formats[0],
 		&elementLength[0], &elementSize[0], FLOAT_DATA, needNormalize);
 
-	LogUtil::printError(std::to_string(sizeof(indices)) + " " + std::to_string(indices.size()));
-
 	std::string uuid = UuidUtil::GenerateUuid();
 	while (CheckUuidExisted(uuid))	//get a empty uuid
 	{

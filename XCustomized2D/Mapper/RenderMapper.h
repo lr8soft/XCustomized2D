@@ -11,10 +11,14 @@
 class RenderMapper {
 private:
 	static	std::map<std::string, std::any> ParseUniformData(lua_State* luaState, int index);
-public:
 
+	static int LuaUpdateBlendSetting(lua_State * luaState);
+	static int LuaUpdateRenderSetting(lua_State * luaState);
 	static int LuaCreateRenderBatch(lua_State * luaState);
 	static int LuaRenderBatch(lua_State * luaState);
+public:
+
+
 
 
 	static int InitRenderFuncLibs(lua_State * luaState);

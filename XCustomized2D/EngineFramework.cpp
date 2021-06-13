@@ -99,7 +99,7 @@ void EngineFramework::FrameLoop()
 
 	lua_State* L = LuaUtil::CreateNewEvon();
 	LuaUtil::LoadLuaFile(L, "test.lua");
-	LuaUtil::InvokeLuaFunction(L, "TestFunc", 0, {}, false, "GameObject");
+	LuaUtil::InvokeLuaFunction(L, "OnInit", 0, {}, false, "GameObject");
 
 	while (!glfwWindowShouldClose(pScreen)) {
 		glClear(GL_COLOR_BUFFER_BIT);

@@ -21,6 +21,10 @@ private:
 	static int LuaTranslateMatrix(lua_State* luaState);
 
 	static int LuaCreateMatrix(lua_State* luaState);
+	static int LuaCreateViewMatrix(lua_State* luaState);
+	static int LuaCreateProjectionMatrix(lua_State* luaState);
+
+
 	static int LuaDeleteMatrix(lua_State* luaState);
 public:
 	static glm::mat4* ConvertToMatrix(lua_State* luaState, int index);

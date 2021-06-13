@@ -4,6 +4,8 @@
 #include "../Base/RenderEnum.h"
 #include "../Base/RenderManager.h"
 
+#include <GL3/gl3w.h>
+
 #include "MathMapper.h"
 #include <string>
 
@@ -12,6 +14,33 @@ using namespace std;
 std::map<std::string, std::any> RenderMapper::ParseUniformData(lua_State * luaState, int index)
 {
 	return std::map<std::string, std::any>();
+}
+
+int RenderMapper::LuaUpdateBlendSetting(lua_State * luaState)
+{
+	int functionValue = LuaUtil::ParseIndexValue<int>(luaState, -1);
+	int functionID = LuaUtil::ParseIndexValue<int>(luaState, -2);
+
+	glBlendFunc(functionID, functionValue);
+
+	return 0;
+}
+
+int RenderMapper::LuaUpdateRenderSetting(lua_State * luaState)
+{
+	bool enableFunction = LuaUtil::ParseIndexValue<bool>(luaState, -1);
+	int functionID = LuaUtil::ParseIndexValue<int>(luaState, -2);
+
+	if (enableFunction)
+	{
+		glEnable(functionID);
+	}
+	else {
+		glDisable(functionID);
+	}
+
+
+	return 0;
 }
 
 int RenderMapper::LuaCreateRenderBatch(lua_State * luaState)
@@ -124,21 +153,6 @@ int RenderMapper::InitRenderFuncLibs(lua_State * luaState)
 
 
 	static const struct luaL_Reg objectlib_m[] = {
-	/*{"setPosition", GameObjectBinder::luaSetPosition},
-	{"setScale", GameObjectBinder::luaSetScale},
-	{"setRotation", GameObjectBinder::luaSetRotation},
-	{"setDead", GameObjectBinder::luaSetDead},
-
-	{"getPosition", GameObjectBinder::luaGetPosition},
-	{"getScale", GameObjectBinder::luaGetScale},
-	{"getRotation", GameObjectBinder::luaGetRotation},
-	{"getDeltaTime", GameObjectBinder::luaGetDeltaTime},
-	{"getAccmulateTime", GameObjectBinder::luaGetAccmulateTime},
-	{"getTagName", GameObjectBinder::luaGetTagName},
-
-	{"playAudio",GameObjectBinder::luaPlayAudio},
-	{"stopAudio",GameObjectBinder::luaStopAudio},
-	{"isPlaying", GameObjectBinder::luaIsPlaying},*/
 
 	{NULL, NULL}
 	};
@@ -148,6 +162,8 @@ int RenderMapper::InitRenderFuncLibs(lua_State * luaState)
 	//{"newInstance", luaAddNewInstance},
 	{"CreateRenderBatch", LuaCreateRenderBatch},
 	{"RenderBatch", LuaRenderBatch},
+	{"UpdateSetting", LuaUpdateRenderSetting},
+	{"UpdateBlendSettting", LuaUpdateBlendSetting},
 	{NULL, NULL}
 	};
 

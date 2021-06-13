@@ -83,6 +83,49 @@ int MathMapper::LuaCreateMatrix(lua_State * luaState)
 	return 1;
 }
 
+int MathMapper::LuaCreateViewMatrix(lua_State * luaState)
+{
+	int stackIndex = -1;
+
+	auto up = LuaUtil::ParseLuaFloatTable(luaState, stackIndex--);
+	auto center = LuaUtil::ParseLuaFloatTable(luaState, stackIndex--);
+	auto eye = LuaUtil::ParseLuaFloatTable(luaState, stackIndex--);
+
+	glm::mat4 **s = (glm::mat4**)lua_newuserdata(luaState, sizeof(glm::mat4*));
+	*s = new glm::mat4();
+	**s = glm::lookAt(glm::vec3(eye[0], eye[1], eye[2]), glm::vec3(center[0], center[1], center[2]), glm::vec3(up[0], up[1], up[2] ));
+
+
+	luaL_getmetatable(luaState, MATH_HELPER_NAMESPACE);
+	lua_setmetatable(luaState, -2);
+
+	return 1;
+}
+
+int MathMapper::LuaCreateProjectionMatrix(lua_State * luaState)
+{
+
+	int stackIndex = -1;
+
+	float farDist = LuaUtil::ParseIndexValue<float>(luaState, stackIndex--);
+
+	float nearDist = LuaUtil::ParseIndexValue<float>(luaState, stackIndex--);
+
+	float aspect = LuaUtil::ParseIndexValue<float>(luaState, stackIndex--);
+	float zoom = LuaUtil::ParseIndexValue<float>(luaState, stackIndex--);
+
+
+	glm::mat4 **s = (glm::mat4**)lua_newuserdata(luaState, sizeof(glm::mat4*));
+	*s = new glm::mat4();
+	**s = glm::perspective(glm::radians(zoom), aspect, nearDist, farDist);
+	
+
+	luaL_getmetatable(luaState, MATH_HELPER_NAMESPACE);
+	lua_setmetatable(luaState, -2);
+
+	return 1;
+}
+
 int MathMapper::LuaDeleteMatrix(lua_State * luaState)
 {
 	glm::mat4 **object = (glm::mat4**)lua_touserdata(luaState, 1);
@@ -122,7 +165,8 @@ int MathMapper::InitMatrixFuncLibs(lua_State * luaState)
 
 	static const struct luaL_Reg objectlib_f[] = {
 		{"CreateMatrix", LuaCreateMatrix},
-	
+		{"CreateProjectionMatrix", LuaCreateProjectionMatrix},
+		{"CreateViewMatrix", LuaCreateViewMatrix},
 		{NULL, NULL}
 	};
 
