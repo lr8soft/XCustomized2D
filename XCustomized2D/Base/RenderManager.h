@@ -24,7 +24,7 @@ public:
 	void ApplyRenderSettings();
 
 	std::string CreateBatch(BufferUsage bufferUsage,
-		std::vector<GLshort>& indices,
+		std::vector<int>& indices,
 		std::vector<float>& vertices,
 		std::vector<void*>& formats,
 		std::vector<int>& elementLength, std::vector<int>& elementSize, bool needNormalize);

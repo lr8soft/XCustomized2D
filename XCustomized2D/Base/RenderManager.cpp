@@ -5,6 +5,7 @@
 #include "../Util/LogUtil.hpp"
 #include "../Util/UuidUtill.hpp"
 #include <GL3/gl3w.h>
+
 RenderManager * RenderManager::pInstance = nullptr;
 
 bool RenderManager::CheckUuidExisted(const std::string & uuid)
@@ -31,7 +32,7 @@ void RenderManager::ApplyRenderSettings()
 {
 }
 
-std::string RenderManager::CreateBatch(BufferUsage bufferUsage, std::vector<GLshort>& indices, std::vector<float>& vertices, std::vector<void*>& formats,
+std::string RenderManager::CreateBatch(BufferUsage bufferUsage, std::vector<int>& indices, std::vector<float>& vertices, std::vector<void*>& formats,
 	std::vector<int>& elementLength, std::vector<int>& elementSize, bool needNormalize)
 {
 	Renderer* renderer = Renderer::getInstance();

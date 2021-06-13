@@ -3,7 +3,7 @@
 #include "../EngineDefine.h"
 #include "../Mapper/MathMapper.h"
 #include "../Mapper/RenderMapper.h"
-
+#include "../Mapper/EngineMapper.h"
 
 #include <string>
 
@@ -21,8 +21,9 @@ lua_State* LuaUtil::CreateNewEvon()
 		{ "package", luaopen_package },
 		{ "table", luaopen_table},
 
-		{ "XCustomizedMath", MathMapper::InitMathFuncLibs},
+		{ "XCustomizedMath", MathMapper::InitMatrixFuncLibs},
 		{ "XCustomizedRenderer", RenderMapper::InitRenderFuncLibs},
+		{ "XCustomizedEngine", EngineMapper::InitEngineLibs},
 		{ NULL, NULL}
 	};
 

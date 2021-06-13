@@ -1,44 +1,16 @@
 require("XCustomizedMath")
 require("XCustomizedRenderer")
-
+require("XCustomizedEngine")
 
 GameObject = {
     renderHandle = "",
     textureData = {
         "tex", "Assets/Texture/test.png"
     },
-
-    shaderUniformData = {}
+    angle = 0
 }
 
 function GameObject.TestFunc()
-    local matrix = XCustomizedMath.CreateMatrix()
-
-    print("Init Matrix")
-    matrix:Show()
-
-
-
-    --[[
-    print("Scale 0.5 0.5 0.5")
-    matrix:Scale({0.5, 0.5, 0.5})
-    matrix:Show()
-    print("Rotate 90 degrees, X Axis")
-    matrix:Rotate(90, {1, 0, 0})
-    matrix:Show()
-    ]]
-
-
-    print("Translate to 1.0 1.0 1.0")
-    matrix:Translate({0.0, 0.0, 0.0})
-    matrix:Show()
-
-    table.insert(GameObject.shaderUniformData, "mvp_mat")
-    table.insert(GameObject.shaderUniformData, matrix)  -- mvp_mat--->matrix
-  
-    --get mvp matrix
-
-
     local vertices = {
         1.0, 1.0,
         1.0,-1.0,
@@ -53,10 +25,28 @@ function GameObject.TestFunc()
 
     GameObject.renderHandle = XCustomizedRenderer.CreateRenderBatch("STATIC_DRAW", indices, vertices, vertexFormats, elementLength, elementSize, false)
     print("uuid:", GameObject.renderHandle)
+
+    height, width = XCustomizedEngine.GetScreenSize()
+    print("Screen height", height, "width:", width)
     --get render uuid
 end
 
 function GameObject.OnRender()
-    XCustomizedRenderer.RenderBatch(GameObject.renderHandle, "Test", "Default", GameObject.textureData, GameObject.shaderUniformData, 6, 0, {})
+    local uniformData = {}  --init uniform data
+
+    local matrix = XCustomizedMath.CreateMatrix()
+
+    matrix:Scale({0.5, 0.5, 0.5})
+    matrix:Rotate(GameObject.angle, {0, 0, 1})
+
+    table.insert(uniformData, "mvp_mat")
+    table.insert(uniformData, matrix)  -- mvp_mat--->matrix
+
+    GameObject.angle = GameObject.angle + 1
+    if GameObject.angle > 360 then
+        GameObject.angle = 0
+    end
+
+    XCustomizedRenderer.RenderBatch(GameObject.renderHandle, "Test", "Default", GameObject.textureData, uniformData, 6, 0, {})
 end
 

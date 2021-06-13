@@ -85,24 +85,25 @@ int MathMapper::LuaCreateMatrix(lua_State * luaState)
 
 int MathMapper::LuaDeleteMatrix(lua_State * luaState)
 {
-	glm::mat4 **object = GetMatrix(luaState);
-	
-	delete *object;
-	*object = nullptr;
+	glm::mat4 **object = (glm::mat4**)lua_touserdata(luaState, 1);
+	if (object)
+	{
+		delete *object;
+		*object = nullptr;
+	}
+
 
 	return 0;
 }
 
 glm::mat4 * MathMapper::ConvertToMatrix(lua_State * luaState, int index)
 {
-	//luaL_checktype(luaState, index, LUA_TUSERDATA);
-	//return (glm::mat4 *)lua_touserdata(luaState, index);
 	glm::mat4 **object = (glm::mat4**)luaL_checkudata(luaState, index, MATH_HELPER_NAMESPACE);
 	luaL_argcheck(luaState, object != NULL, 1, "invalid Matrix data");
 	return *object;
 }
 
-int MathMapper::InitMathFuncLibs(lua_State * luaState)
+int MathMapper::InitMatrixFuncLibs(lua_State * luaState)
 {
 	luaL_newmetatable(luaState, MATH_HELPER_NAMESPACE);
 	/* metatable.__index = metatable */
@@ -115,13 +116,13 @@ int MathMapper::InitMathFuncLibs(lua_State * luaState)
 		{"Scale", LuaScaleMatrix},
 		{"Translate", LuaTranslateMatrix},
 		{"Show", LuaShowMatrix},
-
+		{"__gc", LuaDeleteMatrix},
 		{NULL, NULL}
 	};
 
 	static const struct luaL_Reg objectlib_f[] = {
 		{"CreateMatrix", LuaCreateMatrix},
-		{"DeleteMatrix", LuaDeleteMatrix},
+	
 		{NULL, NULL}
 	};
 

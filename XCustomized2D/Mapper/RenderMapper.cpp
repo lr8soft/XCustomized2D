@@ -28,11 +28,6 @@ int RenderMapper::LuaCreateRenderBatch(lua_State * luaState)
 	std::vector<float> vertices = LuaUtil::ParseLuaFloatTable(luaState, stackIndex--);
 	std::vector<int> indices = LuaUtil::ParseLuaIntegerTable(luaState, stackIndex--);
 
-	std::vector<GLshort> realIndices;
-	for (int index : indices)
-	{
-		realIndices.push_back(index);
-	}
 
 	std::vector<void*> realFormat;
 	for (int length : formats)
@@ -55,7 +50,7 @@ int RenderMapper::LuaCreateRenderBatch(lua_State * luaState)
 		bufferUsage = STATIC_DRAW;
 	}
 
-	std::string uuid = RenderManager::getInstance()->CreateBatch(bufferUsage, realIndices, vertices, realFormat, elementLength, elementSize, needNormalized);
+	std::string uuid = RenderManager::getInstance()->CreateBatch(bufferUsage, indices, vertices, realFormat, elementLength, elementSize, needNormalized);
 
 	lua_settop(luaState, 0);
 	lua_pushstring(luaState, uuid.c_str());

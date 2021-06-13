@@ -21,7 +21,7 @@ Renderer * Renderer::getInstance()
 	return pInstance;
 }
 
-GLuint Renderer::CreateRenderBatch(BufferUsage bufferUsage, int indicesSize, GLshort* indices, int verticesSize, void* vertices,
+GLuint Renderer::CreateRenderBatch(BufferUsage bufferUsage, int indicesSize, int* indices, int verticesSize, void* vertices,
 	int formatLength, void** formats, int* elementLength, int* elementSize, DataFormat dataFormat, bool needNormalize)
 {
 
@@ -114,7 +114,7 @@ void Renderer::RenderBatch(GLuint batchHandle, const std::string& shaderFolder, 
 
 	glBindVertexArray(batchHandle);
 
-    glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_SHORT, 0);
+    glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 	glActiveTexture(GL_TEXTURE0);
 	

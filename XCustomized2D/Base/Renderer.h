@@ -18,7 +18,7 @@ public:
 	static Renderer* getInstance();
 
 	GLuint CreateRenderBatch(BufferUsage bufferUsage,
-		int indicesSize, GLshort* indices,
+		int indicesSize, int* indices,
 		int verticesSize, void* vertices,
 		int formatLength, void** formats,
 		int* elementLength, int* elementSize, DataFormat dataFormat, bool needNormalize );

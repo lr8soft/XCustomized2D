@@ -46,7 +46,7 @@ void EngineFramework::FrameInit()
 	glfwMakeContextCurrent(pScreen);
 
 #ifndef _DEBUG
-	glfwSetInputMode(pScreen, GLFW_CURSOR, GLFW_CURSOR_DISABLED);//capture cursor
+	//glfwSetInputMode(pScreen, GLFW_CURSOR, GLFW_CURSOR_DISABLED);//capture cursor
 #endif
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -102,6 +102,8 @@ void EngineFramework::FrameLoop()
 	LuaUtil::InvokeLuaFunction(L, "TestFunc", 0, {}, false, "GameObject");
 
 	while (!glfwWindowShouldClose(pScreen)) {
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		LuaUtil::InvokeLuaFunction(L, "OnRender", 0, {}, false, "GameObject");
 
 		glfwSwapBuffers(pScreen);

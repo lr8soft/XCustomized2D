@@ -70,6 +70,9 @@
     <ClCompile Include="Mapper\MathMapper.cpp">
       <Filter>Mapper</Filter>
     </ClCompile>
+    <ClCompile Include="Mapper\EngineMapper.cpp">
+      <Filter>Mapper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineFramework.h" />
@@ -176,6 +179,9 @@
       <Filter>Mapper</Filter>
     </ClInclude>
     <ClInclude Include="Mapper\MathMapper.h">
+      <Filter>Mapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Mapper\EngineMapper.h">
       <Filter>Mapper</Filter>
     </ClInclude>
   </ItemGroup>

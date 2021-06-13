@@ -4,13 +4,14 @@
 #include "../Util/LuaUtil.h"
 #include <glm/glm.hpp>
 
+#include <list>
 
 #define MATH_HELPER_NAMESPACE "XCustomized2D.MathHelper"
 
 
-
 class MathMapper {
 private:
+
 	static glm::mat4** GetMatrix(lua_State * luaState);
 
 	static int LuaShowMatrix(lua_State* luaState);
@@ -24,7 +25,7 @@ private:
 public:
 	static glm::mat4* ConvertToMatrix(lua_State* luaState, int index);
 
-	static int InitMathFuncLibs(lua_State * luaState);
+	static int InitMatrixFuncLibs(lua_State * luaState);
 	
 
 };

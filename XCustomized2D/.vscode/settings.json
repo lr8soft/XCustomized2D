@@ -1,6 +1,7 @@
 {
     "Lua.diagnostics.globals": [
         "XCustomizedRenderer",
-        "XCustomizedMath"
+        "XCustomizedMath",
+        "XCustomizedEngine"
     ]
 }
